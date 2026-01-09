@@ -854,6 +854,24 @@ class AffinePolynomialOperator(_AffineOperator):
             entries=new_entries,
         )
 
+    def copy(self):
+        """Return a copy of the operator. Only the operator matrices are
+        copied, not the coefficient functions.
+        """
+        As = None
+        if self.entries is not None:
+            As = [A.copy() for A in self.entries]
+        op = self.__class__(
+            coeffs=self.coeffs,
+            nterms=self.nterms,
+            entries=As,
+            fromblock=False,
+            polynomial_order=self.polynomial_order,
+        )
+        if self.parameter_dimension is not None:
+            op.parameter_dimension = self.parameter_dimension
+        return op
+
 
 class AffineInputOperator(_AffineOperator, InputMixin):
     r"""Affine-parametric input operator

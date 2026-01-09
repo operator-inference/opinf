@@ -64,6 +64,13 @@ class PolynomialOperator(OpInfOperator):
 
         super().__init__(entries=entries)
 
+    def copy(self):
+        """Return a copy of the operator."""
+        entries = self.entries.copy() if self.entries is not None else None
+        return self.__class__(
+            entries=entries, polynomial_order=self.polynomial_order
+        )
+
     def operator_dimension(self, r: int, m=None) -> int:
         """
         computes the number of non-redundant terms in a vector of length r

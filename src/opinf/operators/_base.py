@@ -780,7 +780,7 @@ class OpInfOperator(OperatorTemplate):
     def copy(self):
         """Return a copy of the operator."""
         entries = self.entries.copy() if self.entries is not None else None
-        return self.__class__(entries)
+        return self.__class__(entries=entries)
 
     def save(self, savefile: str, overwrite: bool = False) -> None:
         """Save the operator to an HDF5 file.
