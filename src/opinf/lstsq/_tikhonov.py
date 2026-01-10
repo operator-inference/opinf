@@ -107,7 +107,7 @@ class _BaseRegularizedSolver(SolverTemplate):
             if self.initial_guess.shape[1] != data_matrix.shape[1]:
                 raise RuntimeError(
                     f"""In _BaseRegularizedSolver.fit:
-                    Shape of data matrix ({data_matrix})
+                    Shape of data matrix ({data_matrix.shape})
                     does not match initial guess
                     ({self.initial_guess.shape})"""
                 )
