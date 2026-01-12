@@ -1249,6 +1249,40 @@ class TestInputOperator(_TestNonparametricOperator):
         assert self.Operator.operator_dimension(5, 2) == 2
 
 
+@pytest.mark.parametrize(
+    "r_large, r_small, m",
+    [
+        (r_large, r_small, m)
+        for r_large in range(1, 8)
+        for r_small in range(1, r_large + 1)
+        for m in range(1, 4)
+    ],
+)
+def test_extend_dimension(r_large, r_small, m):
+    matrix_original = np.random.uniform(
+        size=(
+            r_small,
+            _module.InputOperator.operator_dimension(r=r_small, m=m),
+        )
+    )
+
+    # sample random test indices
+    indices_test = np.random.choice(
+        [*range(r_large)], r_small, replace=False
+    ).tolist()
+    indices_test.sort()
+
+    # scale operator up and down
+    operator = _module.InputOperator(entries=matrix_original.copy())
+    operator_extended = operator.extend_to_dimension(
+        new_r=r_large, indices_trial=indices_test
+    )
+    operator_condensed = operator_extended.restrict_to_subspace(
+        indices_trial=indices_test
+    )
+    assert (matrix_original == operator_condensed.entries).all()
+
+
 # Dependent on state and input ================================================
 class TestStateInputOperator(_TestNonparametricOperator):
     """Test operators._nonparametric.StateInputOperator."""
