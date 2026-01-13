@@ -176,8 +176,8 @@ If all tests pass, a line coverage report will be generated.
 Open `htmlcov/index.html` in a browser to view the report.
 
 :::{note}
-Running `tox` without any arguments tests the code for Python 3.9 through 3.12 (if they are installed on your system).
-To test a single Python version, use `tox -e py310` for Python 3.10, `tox -e py311` for Python3.11, and so on.
+Running `tox` without any arguments tests the code for Python 3.10 through 3.14 (if they are installed on your system).
+To test a single Python version, use `tox -e py314` for Python 3.14, `tox -e py313` for Python3.13, and so on.
 :::
 
 ## GitHub Actions

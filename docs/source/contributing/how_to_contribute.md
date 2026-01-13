@@ -58,7 +58,7 @@ Style checks, unit tests, and documentation builds are managed with [`tox`](http
 For each of these tasks, `tox` creates a new virtual environment, installs the dependencies (e.g., `pytest` for running unit tests), and executes the task recipe.
 
 :::{note}
-Unit tests are executed for Python 3.9 through 3.12 if they are installed on your system.
+Unit tests are executed for Python 3.10 through 3.14 if they are installed on your system.
 The best way to install multiple Python versions varies by platform; for MacOS, [we suggest](https://stackoverflow.com/questions/36968425/how-can-i-install-multiple-versions-of-python-on-latest-os-x-and-use-them-in-par#answer-65094122) using [Homebrew](https://brew.sh/).
 
 ```shell

@@ -11,7 +11,7 @@ authors = [
 ]
 maintainers = [{ name = "Shane A. McQuarrie", email = "smcquar@sandia.gov" }]
 readme = { file = "README.md", content-type = "text/markdown" }
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { file = "LICENSE" }
 keywords = [
     "operator inference",
