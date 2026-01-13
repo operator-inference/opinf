@@ -1,5 +1,5 @@
 # test_basics.py
-"""Regression test: linear heat equation, extrapolation to new initial =
+"""Regression test: linear heat equation, extrapolation to new initial
 conditions.
 """
 import os

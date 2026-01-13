@@ -927,8 +927,9 @@ def test_initial_guesses(n_cols, n_dofs, n_red):
         assert ((a >= b) | np.isclose(a, b)).all()
 
     def compare_to_stronger(solver_class, regularizer):
-        # ensure that using a stronger regularization brings
-        # you closer to the initial guess
+        """Ensure that using a stronger regularization brings
+        you closer to the initial guess.
+        """
         scaling = np.logspace(-5, 5, 11)
         val_prev = np.inf * np.ones(n_red)
         for i, scale in enumerate(scaling):
