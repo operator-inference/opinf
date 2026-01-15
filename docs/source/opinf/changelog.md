@@ -5,6 +5,15 @@
 New versions may introduce substantial new features or API adjustments.
 :::
 
+## Version 0.5.17
+
+- Dropped support for Python 3.9, added test coverage for Python 3.14.
+- Tikhonov / L2 least-squares now take an initial guess
+- Expansion of operators to larger or smaller bases (for nested OpInf)
+- Parametric and nonparametric polynomial operators of arbitrary order
+- Bases now have a `fit_compress()` method
+- Update `utils.TimedBlock` to use `time.process_time()`
+
 ## Version 0.5.16
 
 Backend improvements to the regularization selection procedure.

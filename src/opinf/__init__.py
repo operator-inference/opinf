@@ -7,7 +7,7 @@ GitHub:
     https://github.com/Willcox-Research-Group/rom-operator-inference-Python3
 """
 
-__version__ = "0.5.16"
+__version__ = "0.5.17"
 
 from . import (
     basis,
