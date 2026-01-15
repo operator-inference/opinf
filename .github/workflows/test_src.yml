@@ -41,7 +41,6 @@ jobs:
       - name: Run tests
         if: runner.os == 'Windows'
         env:
-          MPLBACKEND: Agg
+          MPLBACKEND: Agg  # Fix a bug in GitHub Actions for Windows
         run: |
-          python -c "import matplotlib; print('backend:', matplotlib.get_backend())"
           python -m tox -e py${{ matrix.python-version }}
