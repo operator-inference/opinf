@@ -28,8 +28,6 @@ jobs:
           - "3.13"
           - "3.14"
     runs-on: ${{ matrix.os }}
-    env:
-      MPLBACKEND: Agg
     steps:
       - uses: actions/checkout@v4
       - name: Install Python
@@ -41,5 +39,8 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install tox
       - name: Run tests
+        if: runner.os == 'Windows'
+        env:
+          MPLBACKEND: Agg
         run: |
           python -m tox -e py${{ matrix.python-version }}
