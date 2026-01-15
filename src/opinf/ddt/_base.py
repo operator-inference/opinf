@@ -144,7 +144,6 @@ class DerivativeEstimatorTemplate(abc.ABC):
         """
         raise NotImplementedError  # pragma: no cover
 
-    @abc.abstractmethod
     def mask(self, arr):
         """Map an array from the training time domain to the domain of the
         estimated time derivatives.
@@ -171,7 +170,7 @@ class DerivativeEstimatorTemplate(abc.ABC):
         >>> Q3.shape == Q.shape
         True
         """
-        raise NotImplementedError  # pragma: no cover
+        return arr
 
     # Verification ------------------------------------------------------------
     def verify_shapes(self, r: int = 5, m: int = 3):  # pragma: no cover
