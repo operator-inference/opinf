@@ -43,4 +43,5 @@ jobs:
         env:
           MPLBACKEND: Agg
         run: |
+          python -c "import matplotlib; print('backend:', matplotlib.get_backend())"
           python -m tox -e py${{ matrix.python-version }}
