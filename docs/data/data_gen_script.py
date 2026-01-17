@@ -37,6 +37,8 @@ def generate_training_data(
         method="BDF",
     ).y
 
+    # TODO: maybe add random noise to the data to make it more realistic?
+
     return t, Q
 
 
@@ -51,10 +53,10 @@ def save_data_to_file(t, Q, filepath, overwrite=True):
 if __name__ == "__main__":
     # TODO: implement command line arguments for the file name
     n_samples = 512
-    n_timesteps = 500
+    n_timesteps = 401
 
     def q_0(x):
-        return x**2 * (1 - x)
+        return x * (1 - x)
 
     t, Q = generate_training_data(n_samples, n_timesteps, q_0)
 
