@@ -1,5 +1,7 @@
 from collections.abc import Callable
 import pathlib
+import sys
+
 import numpy as np
 import scipy
 import opinf
@@ -42,7 +44,9 @@ def generate_training_data(
     return t, Q
 
 
-def save_data_to_file(t, Q, filepath, overwrite=True):
+def save_data_to_file(
+    t: np.ndarray, Q: np.ndarray, filepath: str, overwrite=True
+):
     with opinf.utils.hdf5_savehandle(filepath, overwrite=overwrite) as h5file:
         h5file.create_dataset("t", data=t)
         h5file.create_dataset("Q", data=Q)
@@ -51,7 +55,13 @@ def save_data_to_file(t, Q, filepath, overwrite=True):
 
 
 if __name__ == "__main__":
-    # TODO: implement command line arguments for the file name
+    BASE_DIR = pathlib.Path(__file__).resolve().parent
+    if len(sys.argv) < 2:
+        # filepath
+        path = BASE_DIR / "basic_training_data.h5"
+    else:
+        path = BASE_DIR / sys.argv[1]
+
     n_samples = 512
     n_timesteps = 401
 
@@ -59,8 +69,5 @@ if __name__ == "__main__":
         return x * (1 - x)
 
     t, Q = generate_training_data(n_samples, n_timesteps, q_0)
-
-    BASE_DIR = pathlib.Path(__file__).resolve().parent
-    path = BASE_DIR / "basic_training_data.h5"
 
     save_data_to_file(t, Q, str(path), overwrite=True)
