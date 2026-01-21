@@ -238,12 +238,12 @@ def linkedname(author):
     if names[-1] == "Jr":
         lastname = clean_name(names[-2])
         initials = " ".join([name[0] + "." for name in names[:-2]])
-        key = f"{firstname}_{lastname.replace(" ", "").lower()}"
+        key = f"{firstname}_{lastname.replace(' ', '').lower()}"
         lastname = f"{lastname} Jr."
     else:
         lastname = clean_name(names[-1])
         initials = " ".join([name[0] + "." for name in names[:-1]])
-        key = f"{firstname}_{lastname.replace(" ", "").lower()}"
+        key = f"{firstname}_{lastname.replace(' ', '').lower()}"
 
     # Get the Google Scholar link if possible.
     if key in scholarIDS:
