@@ -58,3 +58,4 @@ Notes/
 tests/add_endclause.py
 docs/use_mathjax_shortcuts.py
 *.code-workspace
+.venv/
