@@ -8,40 +8,59 @@ import opinf
 
 
 def generate_training_data(
-    n_samples: int, n_timesteps: int, q_0: Callable[[np.ndarray], np.ndarray]
-) -> np.ndarray:
-    """Generate sample data to be used for simple
-    (nonparameterized) Operator Inference.
+    n_samples: int,
+    n_timesteps: int,
+    q_0: Callable[[np.ndarray], np.ndarray],
+    u: Callable[[int], np.ndarray] | None = None,
+):
+    """Generate sample data to be used for Operator Inference.
 
     Args:
     n_samples: Number of spatial samples.
     n_timesteps: Number of time steps.
     q_0: Initial condition function. Accepts an array of spatial locations and
         returns an array of initial condition values.
+    u: External input function. Accepts a time value and returns the input
+        values for that time step. If None, u defaults is the zero function
+        (for a model that does not use external inputs)
 
     Returns:
     t: Array of time points.
     Q: Array of "observed" snapshots, shape (n_samples, n_timesteps).
     """
+    external_inputs = True
+    if u is None:
+        external_inputs = False
+
+        def u(t):
+            return 0
+
+    # construct the spatial and temporal domains
     x = np.linspace(0, 1, n_samples + 2)[1:-1]
     dx = x[1] - x[0]
-
     t = np.linspace(0, 1, n_timesteps)
 
+    # construct the matrix of linear operators
     diags = np.array([1, -2, 1]) / dx**2
     A = scipy.sparse.diags(diags, [-1, 0, 1], (n_samples, n_samples))
 
-    Q = scipy.integrate.solve_ivp(
-        fun=lambda t, q: A @ q,
-        t_span=[t[0], t[-1]],
-        y0=q_0(x),
-        t_eval=t,
-        method="BDF",
-    ).y
+    # construct the matrix of external input operators
+    B = np.zeros_like(x)
+    B[0], B[-1] = 1 / dx**2, 1 / dx**2
 
-    # TODO: maybe add random noise to the data to make it more realistic?
+    fom = opinf.models.ContinuousModel(
+        operators=[
+            opinf.operators.LinearOperator(A),
+            opinf.operators.InputOperator(B),
+        ]
+    )
 
-    return t, Q
+    initial_values = q_0(x)
+    initial_values = (
+        initial_values if not external_inputs else initial_values * u(0)
+    )
+
+    return t, fom.predict(initial_values, t, input_func=u, method="BDF")
 
 
 def save_data_to_file(
