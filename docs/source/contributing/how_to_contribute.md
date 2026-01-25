@@ -119,7 +119,7 @@ The GitHub repository is organized as follows.
 
 ## Acceptance Standards
 
-Changes are not usually be accepted until the following tests pass.
+Changes are not usually accepted until the following tests pass.
 
 1. `tox`: write or update tests to validate your additions or changes, preferably with full line coverage.
 2. `tox -e style`: write readable code that conforms to our style guide.
