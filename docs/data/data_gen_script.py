@@ -73,14 +73,7 @@ def save_data_to_file(
     print(f"Training data saved to {filepath}")
 
 
-if __name__ == "__main__":
-    BASE_DIR = pathlib.Path(__file__).resolve().parent
-    if len(sys.argv) < 2:
-        # filepath
-        path = BASE_DIR / "basic_training_data.h5"
-    else:
-        path = BASE_DIR / sys.argv[1]
-
+def generate_basics_data(filepath: str = "basics_data.h5"):
     n_samples = 512
     n_timesteps = 401
 
@@ -90,3 +83,50 @@ if __name__ == "__main__":
     t, Q = generate_training_data(n_samples, n_timesteps, q_0)
 
     save_data_to_file(t, Q, str(path), overwrite=True)
+
+
+def generate_external_inputs_data(filepath: str = "inputs_data.h5"):
+    n_samples = 512
+    n_timesteps = 1000
+
+    alpha = 100
+
+    # the part of the initial condition independent of u(t)
+    def q_0(x):
+        return np.exp(alpha * (x - 1)) + np.exp(-alpha * x) - np.exp(-alpha)
+
+    # the external input function
+    def u(t):
+        return np.ones_like(t) + np.sin(4 * np.pi * t) / 4
+
+    t, Q = generate_training_data(n_samples, n_timesteps, q_0, u)
+
+    save_data_to_file(t, Q, filepath, overwrite=True)
+
+
+if __name__ == "__main__":
+    BASE_DIR = pathlib.Path(__file__).resolve().parent
+    data_to_generate = None
+
+    if len(sys.argv) < 2:
+        data_to_generate = "basics"
+    else:
+        if sys.argv[1] in ["basics", "inputs", "parametric"]:
+            data_to_generate = sys.argv[1]
+        else:
+            raise ValueError(
+                "Data to generate must be one of the following: "
+                "'basics', 'inputs', or 'parametric'."
+            )
+
+    filename = data_to_generate + "_data.h5"
+    path = str(BASE_DIR / filename)
+
+    if data_to_generate == "basics":
+        generate_basics_data(path)
+    elif data_to_generate == "inputs":
+        generate_external_inputs_data(path)
+    elif data_to_generate == "parametric":
+        raise NotImplementedError(
+            "Parametric data generation has not yet been implemented!"
+        )
