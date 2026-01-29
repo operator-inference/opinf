@@ -82,7 +82,7 @@ def generate_basics_data(filepath: str = "basics_data.h5"):
 
     t, Q = generate_training_data(n_samples, n_timesteps, q_0)
 
-    save_data_to_file(t, Q, str(path), overwrite=True)
+    save_data_to_file(t, Q, str(filepath), overwrite=True)
 
 
 def generate_external_inputs_data(filepath: str = "inputs_data.h5"):
@@ -108,25 +108,27 @@ if __name__ == "__main__":
     BASE_DIR = pathlib.Path(__file__).resolve().parent
     data_to_generate = None
 
+    # TODO: write --help flag for this script
     if len(sys.argv) < 2:
-        data_to_generate = "basics"
+        data_to_generate = "all"
     else:
-        if sys.argv[1] in ["basics", "inputs", "parametric"]:
+        if sys.argv[1] in ["basics", "inputs", "parametric", "all"]:
             data_to_generate = sys.argv[1]
         else:
             raise ValueError(
                 "Data to generate must be one of the following: "
-                "'basics', 'inputs', or 'parametric'."
+                "'basics', 'inputs', 'parametric', or 'all'."
             )
 
-    filename = data_to_generate + "_data.h5"
-    path = str(BASE_DIR / "source" / "tutorials" / filename)
-
-    if data_to_generate == "basics":
-        generate_basics_data(path)
-    elif data_to_generate == "inputs":
-        generate_external_inputs_data(path)
-    elif data_to_generate == "parametric":
+    if data_to_generate == "basics" or data_to_generate == "all":
+        generate_basics_data(
+            str(BASE_DIR / "source" / "tutorials" / "basics_data.h5")
+        )
+    if data_to_generate == "inputs" or data_to_generate == "all":
+        generate_external_inputs_data(
+            str(BASE_DIR / "source" / "tutorials" / "inputs_data.h5")
+        )
+    if data_to_generate == "parametric" or data_to_generate == "all":
         raise NotImplementedError(
             "Parametric data generation has not yet been implemented!"
         )
