@@ -108,6 +108,8 @@ def generate_basics_data(filepath: str = "basics_data.h5"):
         _, Q = generate_training_data(n_samples, n_timesteps, func)
         f.create_dataset(str(idx), data=Q)
 
+    print(f"Training data saved to {filepath}")
+
 
 def generate_external_inputs_data(filepath: str = "inputs_data.h5"):
     n_samples = 512
@@ -124,8 +126,14 @@ def generate_external_inputs_data(filepath: str = "inputs_data.h5"):
         return np.ones_like(t) + np.sin(4 * np.pi * t) / 4
 
     t, Q = generate_training_data(n_samples, n_timesteps, q_0, u)
+    U = u(t)
 
-    save_data_to_file(t, Q, filepath, overwrite=True)
+    with h5py.File(filepath, "w") as f:
+        f.create_dataset("t", data=t)
+        f.create_dataset("Q", data=Q)
+        f.create_dataset("U", data=U)
+
+    print(f"Training data saved to {filepath}")
 
 
 if __name__ == "__main__":
@@ -148,11 +156,11 @@ if __name__ == "__main__":
         generate_basics_data(
             str(BASE_DIR / "source" / "tutorials" / "basics_data.h5")
         )
-    if data_to_generate == "inputs" or data_to_generate == "all":
+    elif data_to_generate == "inputs" or data_to_generate == "all":
         generate_external_inputs_data(
             str(BASE_DIR / "source" / "tutorials" / "inputs_data.h5")
         )
-    if data_to_generate == "parametric" or data_to_generate == "all":
+    elif data_to_generate == "parametric" or data_to_generate == "all":
         raise NotImplementedError(
             "Parametric data generation has not yet been implemented!"
         )
