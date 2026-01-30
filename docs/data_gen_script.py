@@ -1,6 +1,7 @@
 from collections.abc import Callable
 import pathlib
 import sys
+import h5py
 
 import numpy as np
 import scipy
@@ -74,15 +75,38 @@ def save_data_to_file(
 
 
 def generate_basics_data(filepath: str = "basics_data.h5"):
+    # set up basic parameters
     n_samples = 512
     n_timesteps = 401
 
-    def q_0(x):
+    # define the various initial conditions used in the tutorial
+    def q_0_default(x):
         return x * (1 - x)
 
-    t, Q = generate_training_data(n_samples, n_timesteps, q_0)
+    initial_condition_funcs = [
+        lambda x: 10 * x * (1 - x),
+        lambda x: 5 * x**2 * (1 - x) ** 2,
+        lambda x: 50 * x**4 * (1 - x) ** 4,
+        lambda x: 0.5 * np.sqrt(x * (1 - x)),
+        lambda x: 0.25 * np.sqrt(np.sqrt(x * (1 - x))),
+        lambda x: np.sin(np.pi * x) / 3 + np.sin(5 * np.pi * x) / 5,
+    ]
 
-    save_data_to_file(t, Q, str(filepath), overwrite=True)
+    # initialize the file we will write the data to
+    f = h5py.File(filepath, "w")
+
+    # generate and save data for the default initial condition
+    # also save the data for the time dimension
+    t, Q_default = generate_training_data(n_samples, n_timesteps, q_0_default)
+    f.create_dataset("t", data=t)
+    f.create_dataset("default", data=Q_default)
+
+    for idx, func in enumerate(initial_condition_funcs):
+        # for each initial condition,
+        # generate the data for that condition
+        # and save it as a new dataset
+        _, Q = generate_training_data(n_samples, n_timesteps, func)
+        f.create_dataset(str(idx), data=Q)
 
 
 def generate_external_inputs_data(filepath: str = "inputs_data.h5"):
