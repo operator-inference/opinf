@@ -114,8 +114,8 @@ def generate_basics_data(filepath: str = "basics_data.h5"):
 
 
 def generate_external_inputs_data(filepath: str = "inputs_data.h5"):
-    n_samples = 512
-    n_timesteps = 1000
+    n_samples = 1023
+    n_timesteps = 1001
 
     alpha = 100
 
@@ -151,6 +151,9 @@ def generate_external_inputs_data(filepath: str = "inputs_data.h5"):
 
     train_grp = f.create_group("train")
     test_grp = f.create_group("test")
+
+    # for each input function, generate data for the inputs and state snapshots
+    # then, save that data to a new dataset in the file
     for idx, [train_input, test_input] in enumerate(
         zip(train_inputs, test_inputs)
     ):
