@@ -108,6 +108,8 @@ def generate_basics_data(filepath: str = "basics_data.h5"):
         _, Q = generate_training_data(n_samples, n_timesteps, func)
         f.create_dataset(str(idx), data=Q)
 
+    f.close()
+
     print(f"Training data saved to {filepath}")
 
 
@@ -121,18 +123,52 @@ def generate_external_inputs_data(filepath: str = "inputs_data.h5"):
     def q_0(x):
         return np.exp(alpha * (x - 1)) + np.exp(-alpha * x) - np.exp(-alpha)
 
-    # the external input function
+    # the define the external inputs functions
     def u(t):
         return np.ones_like(t) + np.sin(4 * np.pi * t) / 4
 
+    train_inputs = [
+        lambda t: np.exp(-t),
+        lambda t: 1 + t**2 / 2,
+        lambda t: 1 - np.sin(np.pi * t) / 2,
+    ]
+    test_inputs = [
+        lambda t: 1 - np.sin(3 * np.pi * t) / 3,
+        lambda t: 1 + 25 * (t * (t - 1)) ** 3,
+        lambda t: 1 + np.exp(-2 * t) * np.sin(np.pi * t),
+    ]
+
+    # initialize the h5 file to write to
+    f = h5py.File(filepath, "w")
+
+    # generate the default training data (for the first part of the tutorial)
     t, Q = generate_training_data(n_samples, n_timesteps, q_0, u)
     U = u(t)
 
-    with h5py.File(filepath, "w") as f:
-        f.create_dataset("t", data=t)
-        f.create_dataset("Q", data=Q)
-        f.create_dataset("U", data=U)
+    f.create_dataset("t", data=t)
+    f.create_dataset("Q", data=Q)
+    f.create_dataset("U", data=U)
 
+    train_grp = f.create_group("train")
+    test_grp = f.create_group("test")
+    for idx, [train_input, test_input] in enumerate(
+        zip(train_inputs, test_inputs)
+    ):
+        _, Q_train = generate_training_data(
+            n_samples, n_timesteps, q_0, train_input
+        )
+        U_train = train_input(t)
+        _, Q_test = generate_training_data(
+            n_samples, n_timesteps, q_0, test_input
+        )
+        U_test = test_input(t)
+
+        train_grp.create_dataset(f"Q_{idx}", data=Q_train)
+        train_grp.create_dataset(f"U_{idx}", data=U_train)
+        test_grp.create_dataset(f"Q_{idx}", data=Q_test)
+        test_grp.create_dataset(f"U_{idx}", data=U_test)
+
+    f.close()
     print(f"Training data saved to {filepath}")
 
 
