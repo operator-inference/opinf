@@ -180,9 +180,10 @@ if __name__ == "__main__":
     data_to_generate = None
 
     # TODO: write --help flag for this script
+    print(sys.argv)
     if len(sys.argv) < 2:
         data_to_generate = "all"
-    else:
+    elif len(sys.argv) == 2:
         if sys.argv[1] in ["basics", "inputs", "parametric", "all"]:
             data_to_generate = sys.argv[1]
         else:
@@ -190,16 +191,20 @@ if __name__ == "__main__":
                 "Data to generate must be one of the following: "
                 "'basics', 'inputs', 'parametric', or 'all'."
             )
+    else:
+        help_msg = "Usage:\n\tpython data_gen_script.py [dataset]\n\nDatasets:\
+            \n\tbasics\n\tinputs\n\tparametric\n\tall\n\nDefault: all"
+        raise ValueError(help_msg)
 
     if data_to_generate == "basics" or data_to_generate == "all":
         generate_basics_data(
             str(BASE_DIR / "source" / "tutorials" / "basics_data.h5")
         )
-    elif data_to_generate == "inputs" or data_to_generate == "all":
+    if data_to_generate == "inputs" or data_to_generate == "all":
         generate_external_inputs_data(
             str(BASE_DIR / "source" / "tutorials" / "inputs_data.h5")
         )
-    elif data_to_generate == "parametric" or data_to_generate == "all":
+    if data_to_generate == "parametric" or data_to_generate == "all":
         raise NotImplementedError(
             "Parametric data generation has not yet been implemented!"
         )
