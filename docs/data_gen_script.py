@@ -122,7 +122,7 @@ def generate_basics_data(filepath: str = "basics_data.h5"):
         # generate the data for that condition
         # and save it as a new dataset
         _, Q = generate_training_data(n_samples, n_timesteps, func)
-        dset = f.create_dataset(f"Experiment {str(idx+1)}", data=Q)
+        dset = f.create_dataset(f"Experiment {idx+1}", data=Q)
         dset.attrs["title"] = title
 
     f.close()
