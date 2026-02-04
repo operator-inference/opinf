@@ -83,13 +83,28 @@ def generate_basics_data(filepath: str = "basics_data.h5"):
     def q_0_default(x):
         return x * (1 - x)
 
-    initial_condition_funcs = [
-        lambda x: 10 * x * (1 - x),
-        lambda x: 5 * x**2 * (1 - x) ** 2,
-        lambda x: 50 * x**4 * (1 - x) ** 4,
-        lambda x: 0.5 * np.sqrt(x * (1 - x)),
-        lambda x: 0.25 * np.sqrt(np.sqrt(x * (1 - x))),
-        lambda x: np.sin(np.pi * x) / 3 + np.sin(5 * np.pi * x) / 5,
+    initial_conditions = [
+        (r"$q_{0}(x) = 10 x (1 - x)$", lambda x: 10 * x * (1 - x)),
+        (
+            r"$q_{0}(x) = 5 x^{2} (1 - x)^{2}$",
+            lambda x: 5 * x**2 * (1 - x) ** 2,
+        ),
+        (
+            r"$q_{0}(x) = 50 x^{4} (1 - x)^{4}$",
+            lambda x: 50 * x**4 * (1 - x) ** 4,
+        ),
+        (
+            r"$q_{0}(x) = \frac{1}{2}\sqrt{x (1 - x)}$",
+            lambda x: 0.5 * np.sqrt(x * (1 - x)),
+        ),
+        (
+            r"$q_{0}(x) = \frac{1}{4}\sqrt[4]{x (1 - x)}$",
+            lambda x: 0.25 * np.sqrt(np.sqrt(x * (1 - x))),
+        ),
+        (
+            r"$q_{0}(x) = \frac{1}{3}\sin(\pi x) + \frac{1}{5}\sin(5\pi x)$",
+            lambda x: np.sin(np.pi * x) / 3 + np.sin(5 * np.pi * x) / 5,
+        ),
     ]
 
     # initialize the file we will write the data to
@@ -101,12 +116,14 @@ def generate_basics_data(filepath: str = "basics_data.h5"):
     f.create_dataset("t", data=t)
     f.create_dataset("default", data=Q_default)
 
-    for idx, func in enumerate(initial_condition_funcs):
+    f.attrs["num_experiments"] = len(initial_conditions)
+    for idx, (title, func) in enumerate(initial_conditions):
         # for each initial condition,
         # generate the data for that condition
         # and save it as a new dataset
         _, Q = generate_training_data(n_samples, n_timesteps, func)
-        f.create_dataset(str(idx), data=Q)
+        dset = f.create_dataset(f"Experiment {str(idx+1)}", data=Q)
+        dset.attrs["title"] = title
 
     f.close()
 
@@ -180,7 +197,6 @@ if __name__ == "__main__":
     data_to_generate = None
 
     # TODO: write --help flag for this script
-    print(sys.argv)
     if len(sys.argv) < 2:
         data_to_generate = "all"
     elif len(sys.argv) == 2:
