@@ -9,8 +9,8 @@ if [ -d "temp_data" ]; then
 fi
 
 # Clone into the repository and download only the data branch
-echo "Cloning into the data branch of https://github.com/XanderBys/opinf.git..."
-git clone -b data --single-branch --depth=1 https://github.com/XanderBys/opinf.git temp_data/
+echo "Cloning into the data branch of https://github.com/operator-inference/opinf.git..."
+git clone -b data --single-branch --depth=1 https://github.com/operator-inference/opinf.git temp_data/
 
 # move docs files into docs/source/api/ directory
 echo "Moving basis_example.npy, pre_example.npy, and lstsq_example.npz into docs/source/api/ directory..."
