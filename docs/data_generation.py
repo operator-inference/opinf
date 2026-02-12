@@ -211,6 +211,9 @@ def generate_external_inputs_data(filepath: str = "inputs_data.h5"):
     def u(t):
         return np.ones_like(t) + np.sin(4 * np.pi * t) / 4
 
+    def u_test(t):
+        return 1 + t * (1 - t)
+
     train_inputs = [
         lambda t: np.exp(-t),
         lambda t: 1 + t**2 / 2,
@@ -228,12 +231,20 @@ def generate_external_inputs_data(filepath: str = "inputs_data.h5"):
         t, Q = generate_training_data(n_samples, n_timesteps, q_0, u)
         U = u(t)
 
+        _, Q_test = generate_training_data(n_samples, n_timesteps, q_0, u_test)
+        U_test = u_test(t)
+
         f.create_dataset("t", data=t)
         f.create_dataset("Q", data=Q)
         f.create_dataset("U", data=U)
+        f.create_dataset("Q_test", data=Q_test)
+        f.create_dataset("U_test", data=U_test)
 
         train_grp = f.create_group("train")
         test_grp = f.create_group("test")
+
+        train_grp.attrs["num_input_functions"] = len(train_inputs)
+        test_grp.attrs["num_input_functions"] = len(test_inputs)
 
         # for each input function, generate data for the inputs and snapshots
         # then, save that data to a new dataset in the file
