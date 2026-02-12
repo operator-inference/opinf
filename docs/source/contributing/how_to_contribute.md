@@ -71,6 +71,12 @@ brew install python@3.12
 
 :::
 
+Some of the tutorials and examples in this documentation rely on pre-generated data. This data is stored in the orphan `data` branch of the GitHub respository. For Mac/Unix users, there is a script titled `data_download.sh` that can be run from the root directory that will automatically download all of the data files and put them in their proper places. The script can be run as follows:
+
+```shell
+bash docs/data_download.sh
+```
+
 Finally, to ensure that new additions follow code standards and conventions, install the [git pre-commit hook](https://pre-commit.com/) with the following command.
 
 ```shell
