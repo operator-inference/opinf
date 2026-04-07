@@ -56,12 +56,13 @@ Jupyter Book is essentially [an opinionated wrapper](https://jupyterbook.org/en/
 This project uses [Jupyter Book with Sphinx Autodoc](https://jupyterbook.org/en/stable/advanced/developers.html) to automatically generate documentation straight from code docstrings.
 Because of our settings for the automatic documentation generation, please follow these guidelines.
 
+- Follow [NumPyDoc style guide](https://numpydoc.readthedocs.io/en/latest/format.html#short-summary) when writing docstrings
 - Class docstrings should _not_ have a "Methods" section.
 - [Properties](https://docs.python.org/3/library/functions.html#property) show up automatically in the documentation, but attributes created at runtime do not.
 - Use `:math:` environments to write actual math.
 
 Note that docstrings must follow Sphinx syntax, not Jupyter notebook syntax.
-For example, use `:math:\`i^2 = -1\`` instead of `$i^2 = -1$`.
+For example, use `` :math:`i^2 = -1` `` instead of `$i^2 = -1$`.
 
 ## Example: Contributing a New Tutorial
 
