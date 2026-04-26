@@ -9,8 +9,7 @@ author = "Willcox Research Group, Oden Institute for Computational Engineering a
 
 extensions = [
     # MyST and notebook support (replaces JupyterBook's built-in handling)
-    "myst_nb",                      # Handles .ipynb and .md with {code-cell} directives
-                                    # Also pulls in myst_parser automatically
+    "myst_nb",                      # handles our .md files
 
     # Bibliography (was bundled in JupyterBook, now explicit)
     "sphinxcontrib.bibtex",
@@ -175,19 +174,20 @@ numfig_secnum_depth = 1             # JupyterBook set this but didn't require nu
 # -- HTML Output -------------------------------------------------------------
 # Replaces the html and repository blocks in _config.yml
 
-html_theme = "pydata_sphinx_theme"  # or "sphinx_book_theme" — see note below
+html_theme = "sphinx_book_theme"
 html_logo = "images/logo.svg"
 html_favicon = "images/favicon.svg"
 
 html_css_files = ["properties.css"] # Your custom CSS from _static/
 
 html_theme_options = {
-    # These are pydata_sphinx_theme equivalents of JupyterBook's html options.
-    # Exact keys depend on your chosen theme — adjust as needed.
-    "github_url": "https://github.com/Willcox-Research-Group/rom-operator-inference-Python3",
+    "repository_url": "https://github.com/Willcox-Research-Group/rom-operator-inference-Python3",
+    "repository_branch": "main",
+    "path_to_book": "docs",
     "use_edit_page_button": False,
-    "use_issues_button": True,       # Note: not all themes support this natively
-    "navbar_start": ["navbar-logo"], # Keeps home page out of navbar
+    "use_issues_button": True,
+    "use_repository_button": True,
+    "home_page_in_navbar": False,
 }
 
 html_context = {
