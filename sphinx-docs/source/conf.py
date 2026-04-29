@@ -175,8 +175,8 @@ numfig_secnum_depth = 1             # JupyterBook set this but didn't require nu
 # Replaces the html and repository blocks in _config.yml
 
 html_theme = "sphinx_book_theme"
-html_logo = "images/logo.svg"
-html_favicon = "images/favicon.svg"
+html_logo = "_static/logo.svg"
+html_favicon = "_static/favicon.svg"
 
 html_css_files = ["properties.css"] # Your custom CSS from _static/
 
