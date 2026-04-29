@@ -1,4 +1,4 @@
-.PHONY: help clean_docs install dev format style test docs deploy_package deploy_docs
+.PHONY: help clean_docs install dev format style test docs deploy_package deploy_docs sphinx_docs
 
 
 REMOVE = rm -rfv
@@ -53,6 +53,9 @@ test: style
 
 docs:
 	$(TOX) -e literature,docs
+
+sphinx_docs:
+	$(TOX) -e sphinx-docs
 
 all: test docs
 
