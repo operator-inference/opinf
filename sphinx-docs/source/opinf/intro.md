@@ -8,7 +8,7 @@ The main steps are the following.
 3.  [**Set up and solve a low-dimensional regression**](subsec-opinf-regression). Use the low-dimensional representation of the training data to determine a reduced-order model (ROM) that best fits the data in a minimum-residual sense. This is the core objective of the package.
 4.  [**Solve the reduced-order model**](subsec-rom-evaluation). Use the learned model to make computationally efficient predictions.
 
-:::{figure} ../../images/summary.svg
+:::{figure} ../../_static/summary.svg
 ---
 width: 80 %
 ---

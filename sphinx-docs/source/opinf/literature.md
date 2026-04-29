@@ -829,8 +829,8 @@ Operator Inference to large-scale problems.
   }</pre></details>
 ## BibTex File
 
-:::{admonition} Sorted alphabetically by author
-:class: dropdown seealso
+:::{dropdown} Sorted alphabetically by author
+:color: success
 
 ```bibtex
 @article{almeida2022chaotic,
@@ -1460,8 +1460,8 @@ Operator Inference to large-scale problems.
 ```
 :::
 
-:::{admonition} Sorted by year then alphabetically by author
-:class: dropdown seealso
+:::{dropdown} Sorted by year then alphabetically by author
+:color: success
 
 ```bibtex
 @article{peherstorfer2016opinf,
