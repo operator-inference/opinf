@@ -6,6 +6,9 @@ docs/_build/
 _autosummaries/
 docs/source/opinf/literature.md
 
+# Sphinx built documentation
+sphinx-docs/build
+
 # Extra Python files
 *.py[cod]
 __pycache__/
