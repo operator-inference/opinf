@@ -63,8 +63,8 @@ For example, use `` :math:`i^2 = -1` `` instead of `$i^2 = -1$`.
 
 :::{admonition} TODO
 
-- Create a notebook and place it in `docs/source/tutorials/`.
-  - Add it to the book with by editting the `toctree` at the 
+- Create a notebook and place it in `sphinx-docs/source/tutorials/`.
+  - Add it to the book with by editting the `toctree` at the end of the `index.md` file in  `sphinx-docs/source`
 - Add data files to the `data` branch:
 
 ```shell
