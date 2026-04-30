@@ -22,7 +22,7 @@ parts:
     chapters:
     - file: source/tutorials/basics.ipynb
     - file: source/tutorials/inputs.ipynb
-    # - file: source/tutorials/lifting.ipynb
+    - file: source/tutorials/lifting.ipynb
     # - file: source/tutorials/regularization.ipynb
     - file: source/tutorials/parametric.ipynb
 
