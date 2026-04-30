@@ -183,11 +183,9 @@ html_css_files = ["properties.css"] # Your custom CSS from _static/
 html_theme_options = {
     "repository_url": "https://github.com/Willcox-Research-Group/rom-operator-inference-Python3",
     "repository_branch": "main",
-    "path_to_book": "docs",
     "use_edit_page_button": False,
     "use_issues_button": True,
     "use_repository_button": True,
-    "home_page_in_navbar": False,
 }
 
 html_context = {
