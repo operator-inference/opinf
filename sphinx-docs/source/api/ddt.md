@@ -117,7 +117,7 @@ $$
 \end{aligned}
 $$ (eq:ddt:lti-reduced)
 
-Here, $\qhat(t)\in\RR^{r}$ is the time-dependent ([reduced-order](./basis.ipynb)) state and $\u(t)\in\RR^{m}$ is the time-dependent input.
+Here, $\qhat(t)\in\RR^{r}$ is the time-dependent ([reduced-order](./basis.md)) state and $\u(t)\in\RR^{m}$ is the time-dependent input.
 In order to learn $\Ahat$ and $\Bhat$, Operator Inference solves a regression problem of the form
 
 $$

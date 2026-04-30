@@ -3,7 +3,7 @@
 The goal of Operator Inference (OpInf) is to construct a low-dimensional, computationally inexpensive system whose solutions are close to those of some high-dimensional system for which we have 1) training data and 2) some knowledge about the system structure.
 The main steps are the following.
 
-1.  [**Get training data**](subsec-training-data). Gather and [preprocess](../api/pre.ipynb) high-dimensional data to learn a low-dimensional model from. This package has a few common preprocessing tools, but the user must bring the data to the table.
+1.  [**Get training data**](subsec-training-data). Gather and [preprocess](../api/pre.md) high-dimensional data to learn a low-dimensional model from. This package has a few common preprocessing tools, but the user must bring the data to the table.
 2.  [**Compute a low-dimensional state representation**](subsec-basis-computation). Approximate the high-dimensional data with only a few degrees of freedom. The simplest approach is to take the SVD of the high-dimensional training data, extract the first few left singular vectors, and use these vectors as a new coordinate basis.
 3.  [**Set up and solve a low-dimensional regression**](subsec-opinf-regression). Use the low-dimensional representation of the training data to determine a reduced-order model (ROM) that best fits the data in a minimum-residual sense. This is the core objective of the package.
 4.  [**Solve the reduced-order model**](subsec-rom-evaluation). Use the learned model to make computationally efficient predictions.
@@ -492,7 +492,7 @@ For example, we may use the ROM to obtain approximate solutions of the FOM {eq}`
 :::{important}
 The accuracy of any data-driven model depends on how well the training data represents the full-order system.
 We should not expect a ROM to perform well under conditions that are wildly different than the training data.
-The [**Getting Started**](../tutorials/basics.ipynb) tutorial demonstrates this concept in the context of prediction for new initial conditions.
+The [**Getting Started**](../tutorials/basics.md) tutorial demonstrates this concept in the context of prediction for new initial conditions.
 :::
 
 ## Brief Example
@@ -538,4 +538,4 @@ absolute_error, relative_error = opinf.post.Lp_error(Q, Q_rom, t)
 ```
 
 The [API pages](../api/main.md) for each submodule provide details on the arguments to the `ROM` class.
-See [**Getting Started**](../tutorials/basics.ipynb) for an introductory tutorial.
+See [**Getting Started**](../tutorials/basics.md) for an introductory tutorial.
