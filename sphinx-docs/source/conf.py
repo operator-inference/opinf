@@ -32,7 +32,7 @@ extensions = [
 ]
 
 # Templates for autosummary (same path as before)
-templates_path = ["templates"]
+templates_path = ["_templates"]
 
 # Static files (CSS, images, etc.)
 html_static_path = ["_static"]
